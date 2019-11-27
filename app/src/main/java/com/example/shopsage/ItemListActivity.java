@@ -46,7 +46,7 @@ public class ItemListActivity extends AppCompatActivity {
         position = getIntent().getIntExtra("position", 0);
         listName.setText(list.getName());
         // Create adapter passing in the sample user data
-        adapter = new ItemListAdapter(list);
+        adapter = new ItemListAdapter(list, this);
         rvItems.setAdapter(adapter);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -65,6 +65,16 @@ public class ItemListActivity extends AppCompatActivity {
                     adapter.add(name, price, location, category);
                 }
                 break;
+            }
+            case (4) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String name = data.getStringExtra("item_name");
+                    String price = data.getStringExtra("item_price");
+                    String location = data.getStringExtra("item_location");
+                    String category = data.getStringExtra("item_category");
+                    int position = data.getIntExtra("position", 0);
+                    adapter.update(name, price, location, category, position);
+                }
             }
         }
     }

@@ -1,6 +1,8 @@
 package com.example.shopsage;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +45,24 @@ public class ItemListAdapter
                     delete(getAdapterPosition());
                 }
             });
+            infoButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   Intent intent = new Intent(context.getApplicationContext(), ItemInfoActivity.class);
+                   intent.putExtra("MyItem", list.items.get(getAdapterPosition()));
+                   intent.putExtra("position", getAdapterPosition());
+                   ((Activity)context).startActivityForResult(intent, 4);
+               }
+            });
+
         }
     }
         private List list;
+        private Context context;
 
-        public ItemListAdapter(List list) {
+        public ItemListAdapter(List list, Context context) {
             this.list = list;
+            this.context = context;
         }
 
         @Override
@@ -102,6 +116,11 @@ public class ItemListAdapter
         notifyItemInserted(getItemCount());
     }
 
+    public void update(String name, String price, String location, String category, int position) {
+        list.items.remove(position);
+        list.items.add(position, new Item(name, price, location, category));
+        notifyItemChanged(position);
+    }
     public List getList() {
             return this.list;
     }

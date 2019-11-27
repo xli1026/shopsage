@@ -23,6 +23,19 @@ public class Item implements Serializable {
         return name;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+
     public boolean isPurchased() {
         return purchased;
     }
